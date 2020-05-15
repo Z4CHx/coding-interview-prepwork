@@ -1,0 +1,41 @@
+// title = "No Repeats Please"on freecodecamp.com
+// I have comment below to demonstrate understanding of this solution 
+that I have studied and reproduced from memory
+
+
+function permAlone(str) {
+  const arr = str.split('')
+  let result = 0
+  // As we iterate through the array this swaps the appropriate indexes, creating a new permutation
+  function swap(a,b){
+    // temp is a staging area so that the value is not lost before assigning it to arr[b]
+    const temp = arr[a]
+    arr[a] = arr[b]
+    arr[b] = temp
+  }
+
+  // recursive function that iteratively sets the range of indices to be swapped.
+  function generate(n){
+    const regex = /([a-z])\1+/
+    // if n===1 the loop below cannot function. This catches that case. If [0] * [1] are not for ex [a,a], we bump the count of non-repeating prermutations
+    if( n === 1 && !regex.test(arr.join(''))){
+      result ++
+    } else {
+      // from arr[i] to arr[n], we swap in sets of two
+      for ( let i = 0 ; i != n ; i++ ) {
+        // the function is run again with a new n value, creating a decreated range of indexes to swap
+        generate(n-1)
+        // if n%2 is 0, we know that the answer is even ( or at least 2 ), 
+        // meaning it's swappable. Zero is falsy, so i,n-1 are passed to the swap function.
+        // the "-1" in "n-1" graps the last index on the first run and subsequently lower indexes as the alg runs.
+        swap( n % 2 ? 0 : i,n-1)
+      }
+    }
+  }
+
+  generate(arr.length)
+  return(result)
+
+}
+
+permAlone('aab');
