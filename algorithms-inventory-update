@@ -1,0 +1,40 @@
+function updateInventory (arr1, arr2) {
+  let invObj = {};
+  let updateObj = {};
+  let result = [];
+
+  arr1.forEach(x => invObj[x[1]] = x[0]);
+  arr2.forEach(x => updateObj[x[1]] = x[0]);
+
+  for (let key in updateObj) {
+    if (invObj[key]) {
+      invObj[key] += updateObj[key];
+    } else {
+      invObj[key] = updateObj[key];
+    }
+  }
+
+  result = Object.keys(invObj)
+    .sort((a, b) => a.localeCompare(b))
+    .map(key => [invObj[key], key]);
+
+  return result;
+}
+
+var curInv = [
+  [21, 'Bowling Ball'],
+  [2, 'Dirty Sock'],
+  [1, 'Hair Pin'],
+  [5, 'Microphone']
+];
+
+var newInv = [
+  [2, 'Hair Pin'],
+  [3, 'Half-Eaten Apple'],
+  [67, 'Bowling Ball'],
+  [7, 'Toothpaste']
+];
+
+console.log(
+  updateInventory(curInv, newInv)
+);
