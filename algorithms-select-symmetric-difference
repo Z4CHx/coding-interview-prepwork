@@ -1,0 +1,20 @@
+// Chose to pursue this solutions as it was stated that any other way of 
+iterating over the array was O^n, while this apparently scales linearly due to the use of "Set".
+
+function sym(...args) {
+  return [...args.reduce(reducer,new Set())]
+}
+
+function reducer(result, arr) {
+  const comparison = new Set(arr)
+  for(let val of comparison){
+    if(result.has(val)) {
+      result.delete(val)
+    } else {
+      result.add(val)
+    }
+  }
+  return result
+}
+
+sym([1, 2, 3], [5, 2, 1, 4]);
